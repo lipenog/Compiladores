@@ -10,11 +10,11 @@
 %start comando
 
 %%
-comando : comando expr ENTER
-    | ;
-expr : NUM
-    | expr MAIS expr
-    | expr MENOS expr
+comando : expr ENTER { printf("resultado = %d\n ", $1); };
+
+expr : NUM              {$$ = $1;}
+    | expr MAIS expr    {$$ = $1 + $3;}
+    | expr MENOS expr   {$$ = $1 - $3;}
     ;
 %%
 
@@ -25,8 +25,9 @@ void yyerror(char *s){
 
 int main(){
     if(yyparse()){
-        puts("aceita!");
-    } else {
         puts("rejeita!");
+    } else {
+        puts("aceita!");
+        return 0;
     }
 }
