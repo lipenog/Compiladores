@@ -2,17 +2,14 @@
     #include "sintatico.h"
     char atomo[100];
     int nlin = 1;
-}
+    int yyerror(char *s);
+%}
 identificador [a-zA-Z]([a-zA-Z0-9])*
 numero        [0-9]+
 espaco        [ \t]+
 novalinha     [\n]
 
 %x coment
-
-%{
-    int nlin = 0;
-%}
 
 
 %%
@@ -66,11 +63,13 @@ nao         return T_NAO        ;
 {numero}        { strcpy(atomo, yytext); return T_NUMERO;}
 {espaco}        ;
 {novalinha}     {nlin++;}
+.               yyerror("Erro lexico");
 
 %%
 
-int yywrap(void) {return 1;}
-int main(void){
-    yylex();
-    return 0;
+int yyerror(char *s){
+    printf("ERRO na linha %d: %s\n", nlin, s);
+    exit(10);
 }
+
+int yywrap(void) {return -1;}
