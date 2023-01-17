@@ -4,6 +4,8 @@
 
 enum {INT, LOG};
 
+int desempilha();
+void empilha(int valor);
 
 struct elemTabSimbolos {
     char id[100];
@@ -55,6 +57,13 @@ void mostraTabela () {
     for(int i = 0; i < posTab; i++)
         printf("\n%30s | %3d | %s\n", tabSimb[i].id, tabSimb[i].end, tabSimb[i].tip == INT ? "INT" : "LOG");
     printf("\n");
+}
+
+void testaTipo(int tipo1, int tipo2, int ret){
+    int t1 = desempilha();
+    int t2 = desempilha();
+    if(t1 != tipo1 || t2 != tipo2) yyerror("Incompatibilidade de tipo!");
+    empilha(ret);
 }
 
 // estrutura da pilha semantica

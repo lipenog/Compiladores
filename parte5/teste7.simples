@@ -4,6 +4,7 @@ programa teste7
     inteiro z
 inicio  
     leia x 
+    b <- nao V
     enquanto x + 2 faca 
         escreva x 
         x <- x - 1 
